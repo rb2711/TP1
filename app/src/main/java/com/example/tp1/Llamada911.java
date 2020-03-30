@@ -20,25 +20,18 @@ public class Llamada911 extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        if (!intent.getExtras().getBoolean("connected")) {
-            Toast.makeText(context, "USB No conectado", Toast.LENGTH_LONG).show();
-        } else {
-
+        if (intent.getExtras().getBoolean("connected")) {
             Intent in = new Intent(intent.ACTION_CALL).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    in.setData(Uri.parse("tel:4428720"));
-
+            in.setData(Uri.parse("tel:911"));
 
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             context.startActivity(in);
+        }
+        else {
+            Toast.makeText(context, "USB No conectado", Toast.LENGTH_LONG).show();
+
         }
     }
 }
